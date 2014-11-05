@@ -1,5 +1,6 @@
 .DS_Store
 node_modules/
+*.sass-cache
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
