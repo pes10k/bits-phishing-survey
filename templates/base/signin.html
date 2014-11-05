@@ -1,0 +1,100 @@
+<html>
+<head>
+ <title>UIC {{ title }}</title>
+ <meta name="viewport" content="width=500, maximum-scale=1.0" />
+ <script type="text/javascript">
+  <!--
+  function setfocus( elemId )
+  {
+  document.getElementById( elemId ).focus();
+  }
+  // -->
+ </script>
+ <style type="text/css">
+  a img { border: none }
+  #logo {
+      height: 51;
+      width: 100%;
+      background-color: white;
+      position: relative;
+  }
+  #logo-img-link {
+      position: absolute;
+  }
+  #logo h1 {
+      height: 50px;
+      padding-left: 5pt;
+      margin-left: 310px;
+      border-left: 1px solid #c00;
+      font-family: Helvetica;
+      font-size: 14pt;
+      font-weight: bold;
+      color: #999;
+  }
+  #toolbar {
+      text-align: right;
+      border-right: 1px solid #003;
+  }
+  #toolbar a {
+      color: #003;
+      text-decoration: none;
+      font-family: helvetica;
+      font-weight: bold;
+      font-size: 11pt;
+      padding: 0 5pt;
+      background-color: #ddd;
+      border-top: 1px solid #003;
+      border-bottom: 1px solid #003;
+      border-left: 1px solid #003;
+  }
+  #login-history {
+      text-align: center;
+      margin: auto;
+  }
+  #login-history td {
+      padding: 1pt 5pt;
+  }
+  #pwfdbtabs {
+      border-bottom: 1px solid black;
+  }
+  #pwfdbtabs a {
+      color: #003;
+      text-decoration: none;
+      font-family: helvetica;
+      font-size: 11pt;
+      padding: 0 5pt;
+      background-color: #ddd;
+      border-top: 1px solid #003;
+      border-bottom: 1px solid #003;
+      border-left: 1px solid #003;
+      border-right: 1px solid #003;
+  }
+  #pwfdbtabs a.current {
+      background-color: white;
+      border-bottom: none;
+  }
+  #authdb-users {
+      text-align: center;
+      margin: auto;
+  }
+  #authdb-users td {
+      padding: 1pt 5pt;
+  }
+  body {
+      font-size: 14pt;
+  }
+  input {
+      font-size: 12pt;
+  }
+ </style>
+</head>
+<body>
+<div id="logo">
+<a id="logo-img-link" name="top" href="http://www.uic.edu/"><img id="logo-img" src="{{ static_url('images/uic-logo.gif') }}"></a>
+<h1>{{ title }}</h1>
+</div>
+
+{{ body }}
+
+ </body>
+</html>

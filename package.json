@@ -1,0 +1,23 @@
+{
+  "name": "bits-phishing-survey",
+  "version": "0.0.1",
+  "description": "Post study survey for the UIC Security Study",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/snyderp/bits-phishing-survey.git"
+  },
+  "author": "Peter Snyder",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/snyderp/bits-phishing-survey/issues"
+  },
+  "homepage": "https://github.com/snyderp/bits-phishing-survey",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-contrib-coffee": "^0.12.0",
+    "grunt-contrib-compass": "^1.0.1"
+  }
+}
