@@ -1,28 +1,46 @@
 {% extends "../base/signin.html" %}
 
-{% block title %}Bluestem ID Server{% end %}
+{% block title %}User Identification Service{% end %}
 
 {% block body %}
- <br/>
 
- <div style="text-align: center; font-size: 14pt; font-weight: bold; color: #c00"/>
- Invalid Referral to UIC WWW Identification Service
- </div>
- <div style="text-align: center; font-size: 14pt; color: #c00"/>
- Please configure your browser to accept cookies and try again.
- </div>
+<hr>
+ <div style="text-align: center; margin-top: 10pt">
+ <form name="id" method="POST" action="/bluestem/login.cgi">
+
+<label for="UserID" style="font-family: sans-serif; font-weight: bold">NetID</label> <input style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsPDhss3LcOZQAAAU5JREFUOMvdkzFLA0EQhd/bO7iIYmklaCUopLAQA6KNaawt9BeIgnUwLHPJRchfEBR7CyGWgiDY2SlIQBT/gDaCoGDudiy8SLwkBiwz1c7y+GZ25i0wnFEqlSZFZKGdi8iiiOR7aU32QkR2c7ncPcljAARAkgckb8IwrGf1fg/oJ8lRAHkR2VDVmOQ8AKjqY1bMHgCGYXhFchnAg6omJGcBXEZRtNoXYK2dMsaMt1qtD9/3p40x5yS9tHICYF1Vn0mOxXH8Uq/Xb389wff9PQDbQRB0t/QNOiPZ1h4B2MoO0fxnYz8dOOcOVbWhqq8kJzzPa3RAXZIkawCenHMjJN/+GiIqlcoFgKKq3pEMAMwAuCa5VK1W3SAfbAIopum+cy5KzwXn3M5AI6XVYlVt1mq1U8/zTlS1CeC9j2+6o1wuz1lrVzpWXLDWTg3pz/0CQnd2Jos49xUAAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-position: right center;" size="20" name="UserID" id="UserIDinput" value="" type="text"><input value="Enter" type="submit"><br>
+Enter your University NetID, then press Enter.
+
+</form></div>
+
+
+<hr style="width: 60%">
+
+ <p style="font-weight: bold; text-align: center">Things you should know...</p>
 
    <blockquote>
-   <p>You arrived at this service someway other than by
-   referral from an authorized server, perhaps by
-   typing in a URL, or returning to a previous
-   authentication page.</p>
+       <p>To protect your privacy, this service will provide
+       your <a href="http://www.uic.edu/depts/accc/accts/netids.html">NetID</a> only to secure applications you request on
+       <a href="/bluestem/login.cgi?Option=aservers&amp;BSVersionHash=45f92b653a26f7de0a29abe0f0dba0bb12a4ff26&amp;BSVersion=1.6&amp;cacheid=1415229761-391322072&amp;msg=&amp;prior=1800&amp;RetrieveURL=2f626c75657374656d2f6367692f72657472696576655f617574682e636769&amp;return=68747470733a2f2f73686962626f6c6574682e7569632e6564752f6964702f417574686e2f52656d6f746555736572&amp;proxy=&amp;proxyrpc=&amp;RPCURL=&amp;RPCVersion=">these authorized servers</a>.
+       The server that has just now requested your ID is shown below.</p>
+
+       <p style="text-align: center; color: blue; font-weight: bold">
+       UIC Shibboleth<br>
+       https://shibboleth.uic.edu/idp/Authn/RemoteUser</p>
+
+ <p><strong>UIUC &amp; UIS visitors:</strong> Sorry, this application is only available to users with @uic.edu NetIDs.</p>
+
+
+ <p style="margin: 0">More information about accounts at UIC and NetIDs can be found <a href="http://www.uic.edu/depts/accc/accts/netids.html" style="font-weight: bold">here</a>.</p>
+
+ <p>To change or recover your password, please visit <a href="http://password.accc.uic.edu" style="font-weight: bold">http://password.accc.uic.edu</a>.</p>
    </blockquote>
-   <hr/>
-   <address>
-   <a href=http://www.uic.edu/depts/accc/cso/ target=_blank>CSO Consultants</a> -
-   <a href=mailto:consult@uic.edu>consult@uic.edu</a>
-   </address>
-   <br>
    <hr>
+   <address>
+   <a href="http://www.uic.edu/depts/accc/cso/" target="_blank">CSO Consultants</a> -
+   <a href="mailto:consult@uic.edu">consult@uic.edu</a>
+   </address>
+<script type="text/javascript">
+document.getElementById('UserIDinput').focus();
+</script>
 {% end %}

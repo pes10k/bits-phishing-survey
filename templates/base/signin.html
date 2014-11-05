@@ -1,6 +1,6 @@
 <html>
 <head>
- <title>UIC {{ title }}</title>
+ <title>UIC {% block title %}{% end %}</title>
  <meta name="viewport" content="width=500, maximum-scale=1.0" />
  <script type="text/javascript">
   <!--
@@ -91,10 +91,10 @@
 <body>
 <div id="logo">
 <a id="logo-img-link" name="top" href="http://www.uic.edu/"><img id="logo-img" src="{{ static_url('images/uic-logo.gif') }}"></a>
-<h1>{{ title }}</h1>
+<h1>{% block title %}{% end %}</h1>
 </div>
 
-{{ body }}
+{% block body %}{% end %}
 
  </body>
 </html>

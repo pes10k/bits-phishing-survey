@@ -3,17 +3,17 @@
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>UIC Post Study Survey | {{ title }}</title>
+    <title>UIC Post Study Survey | {% block title %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="{{ static_url('contrib/bootstrap/css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ static_url('stylesheets/main.css') }}" rel="stylesheet">
   </head>
   <body>
     <header>
-      <h1>{{ title }} – {{ email }}</h1>
+      <h1>{% block title %} – {{ email }}</h1>
     </header>
     <div class="container">
-      {{ body }}
+      {% block body %}
     </div>
   </body>
 </html>
