@@ -26,9 +26,6 @@ def start(routes, params):
     tornado_user = params.tornado_user
     owner_uid = pwd.getpwnam(tornado_user)[2] if tornado_user else None
 
-    # First, make sure that we have a directory set up that we can write logs
-    webcommon.reporting.configure(params.log_dir, uid=owner_uid)
-
     if params.ssl_options:
         server = tornado.httpserver.HTTPServer(
             application, ssl_options=params.ssl_options)
@@ -43,6 +40,9 @@ def start(routes, params):
         os.setuid(owner_uid)
         msg = "Decreasing permisisons to {0}".format(tornado_user)
         tornado.log.app_log.info(msg)
+
+    # Make sure that we have a directory set up that we can write logs
+    webcommon.reporting.configure(params.log_dir, uid=owner_uid)
 
     # Finally, start the server up and start serving requests!
     tornado.ioloop.IOLoop.instance().start()
