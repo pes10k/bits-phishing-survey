@@ -80,7 +80,9 @@ class EventHandler(BaseHandler):
         page = self.get_argument("page")
         event = self.get_argument("event")
         token = self.get_argument("token")
+        print "START WTITE"
         self.record_event(page, event, token)
+        print "FIN WRITE"
         self.finish()
 
 
