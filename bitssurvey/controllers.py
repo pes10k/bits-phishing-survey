@@ -3,7 +3,6 @@ from tornado.escape import url_escape
 from tornado import gen
 import datetime
 import config
-from base64 import b64decode
 import pybootstrapforms.form
 from pybootstrapforms.inputs import Field, Dropdown, TextArea, Markup
 
@@ -48,7 +47,7 @@ class SubmitHandler(BaseHandler):
             doc = {
                 "page": "password",
                 "event": "password form submitted",
-                "token": b64decode(token),
+                "token": token,
                 "timestamp": datetime.datetime.now()
             }
             yield self.settings['db'].events.insert(doc)
@@ -58,7 +57,7 @@ class SubmitHandler(BaseHandler):
         doc = {
             "page": "userid",
             "event": "userid form submitted",
-            "token": b64decode(token),
+            "token": token,
             "userid": userid,
             "timestamp": datetime.datetime.now()
         }
@@ -83,7 +82,7 @@ class EventHandler(BaseHandler):
         doc = {
             "page": page,
             "event": event,
-            "token": b64decode(token),
+            "token": token,
             "timestamp": datetime.datetime.now()
         }
         yield self.settings['db'].events.insert(doc)
@@ -105,7 +104,7 @@ class SurveyHandler(BaseHandler):
         doc = {
             "page": "survey",
             "event": "loaded",
-            "token": b64decode(token),
+            "token": token,
             "timestamp": datetime.datetime.now()
         }
         yield self.settings['db'].events.insert(doc)
@@ -145,7 +144,7 @@ class SurveyHandler(BaseHandler):
         doc = {
             "page": "survey",
             "event": "submitted",
-            "token": b64decode(token),
+            "token": token,
             "comments": comments,
             "timestamp": datetime.datetime.now()
         }
