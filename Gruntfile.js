@@ -7,18 +7,20 @@ module.exports = function(grunt) {
         sassDir: 'compass/sass',
         cssDir: 'static/stylesheets',
         environment: 'production'
-      }
+      },
+      dist: {}
     },
     coffee: {
       compile: {
         files: {
-          'static/script/main.js': ['coffeescript/*.coffee']
+          'static/js/signin.js': ['coffeescript/signin.coffee'],
+          //'static/js/survey.js': ['coffeescript/survey.coffee']
         }
       },
     }
   });
 
-  grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.loadNpmTasks('grunt-contrib-coffee');
+  grunt.loadNpmTasks('grunt-contrib-compass');
   grunt.registerTask('default', ['compass', 'coffee']);
 };

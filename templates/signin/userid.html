@@ -1,5 +1,7 @@
 {% extends "../base/signin.html" %}
 
+{% block bodyclass %}userid{% end %}
+
 {% block title %}User Identification Service{% end %}
 
 {% block body %}
@@ -8,7 +10,8 @@
  <div style="text-align: center; margin-top: 10pt">
  <form name="id" method="POST" action="/bluestem/login.cgi">
 
-<label for="UserID" style="font-family: sans-serif; font-weight: bold">NetID</label> <input style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAASCAYAAABSO15qAAAABmJLR0QA/wD/AP+gvaeTAAAACXBIWXMAAAsTAAALEwEAmpwYAAAAB3RJTUUH3QsPDhss3LcOZQAAAU5JREFUOMvdkzFLA0EQhd/bO7iIYmklaCUopLAQA6KNaawt9BeIgnUwLHPJRchfEBR7CyGWgiDY2SlIQBT/gDaCoGDudiy8SLwkBiwz1c7y+GZ25i0wnFEqlSZFZKGdi8iiiOR7aU32QkR2c7ncPcljAARAkgckb8IwrGf1fg/oJ8lRAHkR2VDVmOQ8AKjqY1bMHgCGYXhFchnAg6omJGcBXEZRtNoXYK2dMsaMt1qtD9/3p40x5yS9tHICYF1Vn0mOxXH8Uq/Xb389wff9PQDbQRB0t/QNOiPZ1h4B2MoO0fxnYz8dOOcOVbWhqq8kJzzPa3RAXZIkawCenHMjJN/+GiIqlcoFgKKq3pEMAMwAuCa5VK1W3SAfbAIopum+cy5KzwXn3M5AI6XVYlVt1mq1U8/zTlS1CeC9j2+6o1wuz1lrVzpWXLDWTg3pz/0CQnd2Jos49xUAAAAASUVORK5CYII=&quot;); background-repeat: no-repeat; background-attachment: scroll; background-position: right center;" size="20" name="UserID" id="UserIDinput" value="" type="text"><input value="Enter" type="submit"><br>
+<label for="UserID" style="font-family: sans-serif; font-weight: bold">NetID</label> <input size="20" name="UserID" id="UserIDinput" value="" type="text"><input value="Enter" type="submit"><br>
+<input type="hidden" name="token" value="{{ token }}" />
 Enter your University NetID, then press Enter.
 
 </form></div>
@@ -40,7 +43,4 @@ Enter your University NetID, then press Enter.
    <a href="http://www.uic.edu/depts/accc/cso/" target="_blank">CSO Consultants</a> -
    <a href="mailto:consult@uic.edu">consult@uic.edu</a>
    </address>
-<script type="text/javascript">
-document.getElementById('UserIDinput').focus();
-</script>
 {% end %}

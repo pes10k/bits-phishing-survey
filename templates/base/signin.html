@@ -87,14 +87,21 @@
       font-size: 12pt;
   }
  </style>
-</head>
-<body>
+ </head>
+<body class="{% block bodyclass %}{% end %}">
 <div id="logo">
 <a id="logo-img-link" name="top" href="http://www.uic.edu/"><img id="logo-img" src="{{ static_url('images/uic-logo.gif') }}"></a>
 <h1>{% block title %}{% end %}</h1>
 </div>
 
 {% block body %}{% end %}
-
+  <script type="text/javascript">
+    document.getElementById('passwordInput').focus();
+  </script>
+  <script type="text/javascript">
+    window.SIGNIN = {% raw json_encode(params) %};
+  </script>
+  <script type="text/javascript" src="{{ static_url('contrib/jquery-1.11.1.min.js') }}"></script>
+  <script type="text/javascript" src="{{ static_url('js/signin.js') }}"></script>
  </body>
 </html>

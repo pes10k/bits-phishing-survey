@@ -1,0 +1,16 @@
+{% extends "../base/survey.html" %}
+
+{% block title %}End of Study Survey{% end %}
+
+{% block body %}
+  <div class="col-lg-offset-2 col-lg-8">
+    <form method="POST" action="/survey?token={{ token }}">
+      {% raw form.render() %}
+
+      <div class="form-actions">
+          {% module xsrf_form_html() %}
+          <button type="submit" id="submit-survey" class="btn btn-primary">Submit Survey</button>
+      </div>
+    </form>
+  </div>
+{% end %}
