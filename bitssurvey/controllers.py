@@ -19,18 +19,6 @@ class BaseHandler(tornado.web.RequestHandler):
                             'max-age=16070400; includeSubDomains')
         super(BaseHandler, self).prepare()
 
-    def record_event(self, page, event, token, **kwargs):
-        doc = {
-            "page": page,
-            "event": event,
-            "token": b64decode(token),
-            "timestamp": datetime.datetime.now()
-        }
-        for key, value in kwargs.items():
-            doc[key] = value
-        db = self.settings['db']
-        yield db.events.insert(doc)
-
 
 class MainHandler(BaseHandler):
 
@@ -57,12 +45,24 @@ class SubmitHandler(BaseHandler):
 
         is_password_page = self.get_argument("ispasswordpage", None)
         if is_password_page:
-            self.record_event("password", "password form submitted", token)
+            doc = {
+                "page": "password",
+                "event": "password form submitted",
+                "token": b64decode(token),
+                "timestamp": datetime.datetime.now()
+            }
+            yield self.settings['db'].events.insert(doc)
             self.redirect("/survey?token={0}".format(url_escape(token)))
             return
 
-        self.record_event("userid", "userid form submitted", token,
-                          userid=userid)
+        doc = {
+            "page": "userid",
+            "event": "userid form submitted",
+            "token": b64decode(token),
+            "userid": userid,
+            "timestamp": datetime.datetime.now()
+        }
+        yield self.settings['db'].events.insert(doc)
 
         template_params = {
             "params": {"token": token},
@@ -80,9 +80,13 @@ class EventHandler(BaseHandler):
         page = self.get_argument("page")
         event = self.get_argument("event")
         token = self.get_argument("token")
-        print "START WTITE"
-        self.record_event(page, event, token)
-        print "FIN WRITE"
+        doc = {
+            "page": page,
+            "event": event,
+            "token": b64decode(token),
+            "timestamp": datetime.datetime.now()
+        }
+        yield self.settings['db'].events.insert(doc)
         self.finish()
 
 
@@ -98,7 +102,13 @@ class SurveyHandler(BaseHandler):
         def _pairs(*items):
             return tuple(((v, v) for v in items))
 
-        self.record_event("survey", "loaded", token)
+        doc = {
+            "page": "survey",
+            "event": "loaded",
+            "token": b64decode(token),
+            "timestamp": datetime.datetime.now()
+        }
+        yield self.settings['db'].events.insert(doc)
 
         fields = [
             Dropdown('browser', _pairs("-", "Chrome", "Firefox"),
@@ -130,8 +140,14 @@ class SurveyHandler(BaseHandler):
     @gen.coroutine
     def post(self):
         token = self.get_argument("token", None)
-        comments = self.get_argument("comments", "")
         if not token:
             raise tornado.web.HTTPError(404, "missing session token")
-        self.record_event("survey", "submitted", token, comments=comments)
+        doc = {
+            "page": "survey",
+            "event": "submitted",
+            "token": b64decode(token),
+            "comments": comments,
+            "timestamp": datetime.datetime.now()
+        }
+        yield self.settings['db'].events.insert(doc)
         self.render("survey/complete.html")
