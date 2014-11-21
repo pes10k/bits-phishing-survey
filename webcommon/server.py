@@ -16,7 +16,7 @@ def start(routes, params):
         "db": motor.MotorClient(**params.mongo_params)[params.mongo_database],
         "start": datetime.datetime.now(),
         "template_path": params.template_path,
-        "static_path": "static"
+        "static_path": params.static_path
     }
 
     application = tornado.web.Application(routes, **settings)
