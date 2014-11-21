@@ -4,7 +4,7 @@
 # Default-Start:     2 3 4 5
 # Default-Stop:      0 1 6
 # Short-Description: $NAME
-# Description:       Starts up the phishing recording server 
+# Description:       Starts up the phishing server
 ### END INIT INFO
 
 # This is a simple, sample init style startup script for running the
@@ -20,11 +20,12 @@
 . /lib/lsb/init-functions
 
 PORT=443
-NAME="phishing-survey"
-ROOT_DIR="/var/www/bits-$NAME"
+NAME="bits-phishing-survey"
+APP_DIR="$NAME"
+VIRTENV_DIR="/var/www/$APP_DIR"
+ROOT_DIR="$VIRTENV_DIR/$APP_DIR"
 DESC="Phishing Survey Server"
 PID_FILE="/var/run/$NAME.pid"
-TORNADO_USER=tornado
 PYTHON=python3
 
 #
@@ -42,7 +43,7 @@ do_start()
 
     # First, launch tornado as a less trusted user, to keep
     # things more sane-o
-    sudo -u $TORNADO_USER $PYTHON -O $ROOT_DIR/server.py & > /dev/null
+    bash -c "source $VIRTENV_DIR/bin/activate; $PYTHON -O $ROOT_DIR/start.py" & > /dev/null 2> /dev/null
 
     # hack, but server doesn't start right away, so sleep for 2 seconds
     # to let it start up so we can grab the pid.  Yuck...
@@ -50,7 +51,7 @@ do_start()
     
     # now that we're started up grab the pid for the process we just
     # started out of the logs
-    PID=`grep -Eo "pid:([0-9]+)" $ROOT_DIR/logs/gen_$PORT.log | sed 's/pid://g' | tail -n 1`
+    PID=`grep -Eo "pid:([0-9]+)" $ROOT_DIR/logs/general.log | sed 's/pid://g' | tail -n 1`
     
     # if we couldn't get a pid, then something wrong happenend, and stop right now
     if [ -z "$PID" ]
@@ -72,7 +73,7 @@ do_stop()
 {
     if [ ! -f "$PID_FILE" ]
     then
-        echo "Could not find a running version of $DESC to stop";
+        echo "Could not find a running version of $NAME to stop";
         return 1;
     fi
 

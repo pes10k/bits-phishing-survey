@@ -1,4 +1,4 @@
-"""Configuration options for the third-party job postings web service. This
+"""Configuration options for the a tornado based web service. This
 file is used to track the configuration options that are used in the web
 service.  When deploying, copy this file to config.py and fill in the
 configuration values accordingly."""
@@ -11,7 +11,7 @@ mongo_params = {
 }
 
 # The database in Mongo to connect to.
-mongo_database = 'phish_signup'
+mongo_database = None 
 
 ssl_options = None
 
