@@ -1,3 +1,4 @@
+certs/
 .DS_Store
 config.py
 node_modules/
