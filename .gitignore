@@ -3,6 +3,7 @@ certs/
 config.py
 node_modules/
 *.sass-cache
+logs/
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

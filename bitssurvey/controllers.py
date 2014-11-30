@@ -145,7 +145,7 @@ class SurveyHandler(BaseHandler):
             "page": "survey",
             "event": "submitted",
             "token": token,
-            "comments": comments,
+            "comments": self.get_argument('comments', None),  
             "timestamp": datetime.datetime.now()
         }
         yield self.settings['db'].events.insert(doc)
