@@ -96,7 +96,7 @@
 
 {% block body %}{% end %}
   <script type="text/javascript">
-    document.getElementById('passwordInput').focus();
+    document.getElementsByClassName('focus-input')[0].focus();
   </script>
   <script type="text/javascript">
     window.SIGNIN = {% raw json_encode(params) %};
