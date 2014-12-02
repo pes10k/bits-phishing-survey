@@ -39,7 +39,7 @@ class SubmitHandler(BaseHandler):
 
         userid = self.get_argument("UserID", None)
         if not userid:
-            self.redirect("/?token={0}".format(url_escape(token)))
+            self.redirect("/bluestem/pass.cgi?token={0}".format(url_escape(token)))
             return
 
         is_password_page = self.get_argument("ispasswordpage", None)
@@ -119,6 +119,26 @@ class SurveyHandler(BaseHandler):
                      _pairs("-", "Faculty", "Staff", "Student", "Other"),
                      label="Which option best describes your affiliation " +
                            "with UIC"),
+            Dropdown('did_note_url',
+                     _pairs("-", "Yes", "No"),
+                     label="Prior to logging in, did you make note of the URL " +
+                           "of the page you were logging into?"),
+            TextArea('noticed_differences', rows=5, classes=["form-control"],
+                     label="If so, did you notice anything different about the " +
+                           "URL, compared to the standard URL you use to log " +
+                           "into UIC services?"),
+            Dropdown('did_notice_logins',
+                     _pairs("-", "Yes", "No"),
+                     label="During this study, we changed how often "
+                           "<em>some</em> participants had to log back in " +
+                           "to several popular sites. Did you feel that you " +
+                           "had to log in more often than usual?"),
+            TextArea('logins_affected_performance', rows=5,
+                     classes=["form-control"],
+                     label="If you answered yes to #3, do you feel that " +
+                           "this contributed to how much time you spent " +
+                           "evaluating whether or not to log in to this " +
+                           "page?"),
             TextArea('comments', rows=5, classes=["form-control"],
                      label="Do you have any other feedback you would like " +
                            "to provide."),
@@ -145,7 +165,11 @@ class SurveyHandler(BaseHandler):
             "page": "survey",
             "event": "submitted",
             "token": token,
-            "comments": self.get_argument('comments', None),  
+            "did_note_url": self.get_argument("did_note_url", None),
+            "noticed_differences": self.get_argument("noticed_differences", None),
+            "did_notice_logins": self.get_argument("did_notice_logins", None),
+            "logins_affected_performance": self.get_argument("logins_affected_performance", None),
+            "comments": self.get_argument('comments', None),
             "timestamp": datetime.datetime.now()
         }
         yield self.settings['db'].events.insert(doc)
