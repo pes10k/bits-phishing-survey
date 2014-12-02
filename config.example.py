@@ -46,7 +46,7 @@ static_path = os.path.join(root_dir, "static")
 smtp_password = None
 
 # Host to connect to STMP server at
-smtp_survey = "example.org"
+smtp_server = "example.org"
 
 # Email address to send survey solication messages from
 from_address = "account@example.org"
