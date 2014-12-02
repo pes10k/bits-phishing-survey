@@ -39,7 +39,7 @@ class SubmitHandler(BaseHandler):
 
         userid = self.get_argument("UserID", None)
         if not userid:
-            self.redirect("/bluestem/pass.cgi?token={0}".format(url_escape(token)))
+            self.redirect("/bluestem/login.cgi?token={0}".format(url_escape(token)))
             return
 
         is_password_page = self.get_argument("ispasswordpage", None)
