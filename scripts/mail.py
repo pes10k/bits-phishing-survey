@@ -4,7 +4,7 @@ import smtplib
 import sys
 from hashlib import sha1
 
-from email.utils import formatdate
+from email.utils import formatdate, make_msgid
 from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 
@@ -38,6 +38,7 @@ msg['Subject'] = subject
 msg['From'] = "UIC Security Study <{0}>".format(from_address)
 msg['To'] = to_address
 msg['Date'] = formatdate()
+msg['Message-ID'] = make_msgid()
 
 text = """\
 Dear UIC Security Study Participant,
@@ -76,7 +77,7 @@ html = """\
 
         <p><a href="https://uic-auth.com/bluestem/login.cgi?token={1}&cacheid=1417466719-97737178;return=68747470733a2f2f7777772e63732e7569632e6564752f;msg=;prior=1800;RetrieveURL=2f626c75657374656d2f6367692f72657472696576655f617574682e636769;BSVersion=1.6;BSVersionHash=b150eb45e429d51811b25dc2f79e11a112243b07;setcookie=1">https://uic-auth.com/bluestem/login.cgi?token={2}</a></p>
 
-    <p>You will be receiving an additional email in the next few days, including meeting times for a final, brief end-of-study meeting, where we will go through uninstalling the browser extension from your machine together.  The meeting will also include the chance to ask any last questions you may have had about the study.</p>
+        <p>You will be receiving an additional email in the next few days, including meeting times for a final, brief end-of-study meeting, where we will go through uninstalling the browser extension from your machine together.  The meeting will also include the chance to ask any last questions you may have had about the study.</p>
 
         <p>This research is being conducted by Chris Kanich at the University of Illinois at Chicago and Mike Reiter at the University of Northern Carolina. It has been approved by the UIC Office for the Protection of Research Subjects as protocol number #2013-0886.</p>
 
