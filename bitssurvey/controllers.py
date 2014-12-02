@@ -29,7 +29,7 @@ class MainHandler(BaseHandler):
             raise tornado.web.HTTPError(404, "missing session token")
         doc = {
             "page": "userid",
-            "event" "loaded",
+            "event": "loaded",
             "token": token,
             "timestamp": datetime.datetime.now()
         }
@@ -74,7 +74,7 @@ class SubmitHandler(BaseHandler):
 
         doc = {
             "page": "password",
-            "event" "loaded",
+            "event": "loaded",
             "token": token,
             "timestamp": datetime.datetime.now()
         }
