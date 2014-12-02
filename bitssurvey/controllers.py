@@ -187,6 +187,7 @@ class SurveyHandler(BaseHandler):
             "did_notice_logins": self.get_argument("did_notice_logins", None),
             "logins_affected_performance": self.get_argument("logins_affected_performance", None),
             "comments": self.get_argument('comments', None),
+            "email": self.get_argument('email', None),
             "timestamp": datetime.datetime.now()
         }
         yield self.settings['db'].events.insert(doc)
