@@ -140,8 +140,8 @@ class SurveyHandler(BaseHandler):
                            "evaluating whether or not to log in to this " +
                            "page?"),
             TextArea('comments', rows=5, classes=["form-control"],
-                     label="Do you have any other feedback you would like " +
-                           "to provide."),
+                     label="If you have any other feedback you would like " +
+                           "to provide, please include it below."),
             Field('email', label="Email Address",
                   help="What email address should we use if we need to " +
                        "follow up?"),
