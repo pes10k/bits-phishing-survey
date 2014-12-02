@@ -15,7 +15,7 @@ mongo_params = {
 }
 
 # The database in Mongo to connect to.
-mongo_database = None 
+mongo_database = None
 
 ssl_options = None
 
@@ -41,3 +41,12 @@ template_path = os.path.join(root_dir, "templates")
 
 # Static path for serving files
 static_path = os.path.join(root_dir, "static")
+
+# Password for sending SMTP survey solicitation messages
+smtp_password = None
+
+# Host to connect to STMP server at
+smtp_survey = "example.org"
+
+# Email address to send survey solication messages from
+from_address = "account@example.org"
