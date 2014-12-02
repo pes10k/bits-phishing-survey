@@ -14,7 +14,6 @@
         token: token
       });
     };
-    reportEvent("loaded");
     if (pageName === "userid") {
       userIdWasEntered = false;
       $("form #UserIDinput").change(function() {

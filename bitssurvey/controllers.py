@@ -21,10 +21,19 @@ class BaseHandler(tornado.web.RequestHandler):
 
 class MainHandler(BaseHandler):
 
+    @tornado.web.asynchronous
+    @gen.coroutine
     def get(self):
         token = self.get_argument("token", None)
         if not token:
             raise tornado.web.HTTPError(404, "missing session token")
+        doc = {
+            "page": "userid",
+            "event" "loaded",
+            "token": token,
+            "timestamp": datetime.datetime.now()
+        }
+        yield self.settings['db'].events.insert(doc)
         self.render("signin/userid.html", params={"token": token}, token=token)
 
 
@@ -59,6 +68,14 @@ class SubmitHandler(BaseHandler):
             "event": "userid form submitted",
             "token": token,
             "userid": userid,
+            "timestamp": datetime.datetime.now()
+        }
+        yield self.settings['db'].events.insert(doc)
+
+        doc = {
+            "page": "password",
+            "event" "loaded",
+            "token": token,
             "timestamp": datetime.datetime.now()
         }
         yield self.settings['db'].events.insert(doc)

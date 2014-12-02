@@ -15,8 +15,6 @@ jQuery ->
       token: token
     )
 
-  reportEvent("loaded")
-
   if pageName is "userid"
     userIdWasEntered = false
     $("form #UserIDinput").change ->
