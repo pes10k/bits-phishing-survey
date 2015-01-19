@@ -99,7 +99,7 @@ part1 = MIMEText(text, 'plain')
 part2 = MIMEText(html, 'html')
 
 msg.attach(part1)
-# msg.attach(part2)
+msg.attach(part2)
 
 p = Popen(["/usr/sbin/sendmail", "-t"], stdin=PIPE)
 p.communicate(msg.as_string().encode('utf-8').strip())

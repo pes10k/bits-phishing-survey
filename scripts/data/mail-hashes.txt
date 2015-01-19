@@ -1,0 +1,6 @@
+pjha4@uic.edu a905c585700d750d2b7c3c9b8bbe29a2ac42e149
+rholtz3@uic.edu b45447f0710ec3c46b0dabf76b1f5d94d14d04fd
+dmccart@gmail.com 1e2a497e17cf7efc4b8cb8b86e412421893dfacb
+djmccart@gmail.com 1aa8872fbbe4dcd028b7979885e7a9beb64182a2
+pscisl2@uic.edu a86143c819a43848f3578b17ba4ab8df70fc3958
+sfhassa2@uic.edu ba26dc29167df69e49ed51adaae8688ba5d979ac
