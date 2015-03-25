@@ -7,40 +7,48 @@ import os.path
 import imp 
 from pprint import pprint
 
+if sys.argv[1] == "good":
+  mapping_file = "data/mapping-good.csv"
+  dest_file = "data/delays-good.csv"
+elif sys.argv[1] == "pws":
+  mapping_file = "data/mapping-pws.csv"
+  dest_file = "data/delays-pws.csv"
+elif sys.argv[1] == "bad":
+  mapping_file = "data/mapping-bad.csv"
+  dest_file = "data/delays-bad.csv"
+else:
+  raise Exception("Must specify good or bad file")
+
 script_dir = os.path.abspath(os.path.dirname(__file__))
 root_dir = os.path.abspath(os.path.join(script_dir, os.pardir))
 config = imp.load_source('config', os.path.join(root_dir, 'config.py'))
 
-token_to_email_map = {}
-for a_file in ('mail-hashes.txt', 'second-mail-hashes.txt', 'third-mail-hashes.txt'):
+install_id_to_email_map = {}
+for a_file in ('data/mail-hashes.txt', 'data/second-mail-hashes.txt', 'data/third-mail-hashes.txt'):
   with open(a_file, 'r') as h:
     for line in h.readlines():
       email, a_hash = line.strip().split(" ")
-      token_to_email_map[a_hash] = email
+      install_id_to_email_map[a_hash] = email
 
 email_to_sess_map = {}
-h = open('email-to-install-mapping.txt', 'r')
+email_to_pws_map = {}
+h = open(mapping_file, 'r')
 for line in h:
-  try:
-    email, time, token = line.strip().split(" ")
-  except:
-    continue
-  email_to_sess_map[email] = token
+  email, install_id, num_pws = line.strip().split(" ")
+  email_to_sess_map[email.lower()] = install_id
+  email_to_pws_map[email.lower()] = num_pws
 
 sess_to_group_map = {}
-with open('install-mapping.txt', 'r') as h:
+with open('data/install-mapping.txt', 'r') as h:
   for line in h:
-    try:
-      sess_id, group = line.strip().split(" ")
-      sess_to_group_map[sess_id] = group
-    except:
-      continue
+    sess_id, group = line.strip().split(" ")
+    sess_to_group_map[sess_id] = group
 
-def group_for_token(token):
-  email = token_to_email_map[token]
+def group_for_install_id(install_id):
+  email = install_id_to_email_map[install_id].lower()
   sess_id = email_to_sess_map[email]
   group = sess_to_group_map[sess_id]
-  return group
+  return group, email_to_pws_map[email]
 
 mongo_params = config.mongo_params
 mongo_client = pymongo.MongoClient(mongo_params['host'], mongo_params['port'])
@@ -66,16 +74,15 @@ def pass_delay(a_hash):
   return starts, ends
 
 hashes = set(db.command({'distinct': "events", 'key': "token", "query": {"event": "loaded", "page": "userid"}})['values'])
-
 groups = {}
 
-# with open('data.csv', 'w') as csvfile:
-# 
-#   writer = csv.writer(csvfile)
-#   writer.writerow(['token', 'group', 'userid delay', 'password delay'])
+csvfile = open(dest_file, 'w')
+
+writer = csv.writer(csvfile)
+writer.writerow(['install_id', 'group', 'userid delay', 'password delay', 'num pws'])
 
 for a_hash in hashes:
-  hashes_group = group_for_token(a_hash)
+  hashes_group, num_pws = group_for_install_id(a_hash)
   if hashes_group not in ('control', 'reauth'):
     continue
 
@@ -91,8 +98,8 @@ for a_hash in hashes:
   if not userid_diff or not pass_diff:
     continue
 
-  # writer.writerow([a_hash, hashes_group, userid_diff, pass_diff])
-  # continue
+  writer.writerow([a_hash, hashes_group, userid_diff, pass_diff, num_pws])
+  continue
 
   if hashes_group not in groups:
     groups[hashes_group] = {"pass": [], "userid": []}
@@ -102,7 +109,7 @@ for a_hash in hashes:
   
   if hash_pass_delay:
     groups[hashes_group]['pass'].append(pass_diff.microseconds / float(1000000) + pass_diff.seconds)
-  # sys.exit()
+
 measures = (("Mean", stats.mean), ("Min", min), ("Max", max),
             ("St Dev", stats.stdev), ("Sum", sum),
             ("Count", len))

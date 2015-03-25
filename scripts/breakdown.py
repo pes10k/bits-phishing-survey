@@ -1,5 +1,4 @@
 #!/usr/bin/env python
-import statistics
 import sys
 import pymongo
 import os.path
@@ -16,23 +15,23 @@ root_dir = os.path.abspath(os.path.join(script_dir, os.pardir))
 config = imp.load_source('config', os.path.join(root_dir, 'config.py'))
 
 token_to_email_map = {}
-for a_file in ('mail-hashes.txt', 'second-mail-hashes.txt', 'third-mail-hashes.txt'):
+for a_file in ('data/mail-hashes.txt', 'data/second-mail-hashes.txt', 'data/third-mail-hashes.txt'):
   with open(a_file, 'r') as h:
     for line in h.readlines():
       email, a_hash = line.strip().split(" ")
       token_to_email_map[a_hash] = email
 
 email_to_sess_map = {}
-h = open('email-to-install-mapping.txt', 'r')
+h = open('data/mappings.csv', 'r')
 for line in h:
   try:
-    email, time, token = line.strip().split(" ")
+    email, token = line.strip().split(" ")
   except:
     continue
   email_to_sess_map[email] = token
 
 sess_to_group_map = {}
-with open('install-mapping.txt', 'r') as h:
+with open('data/install-mapping.txt', 'r') as h:
   for line in h:
     try:
       sess_id, group = line.strip().split(" ")
@@ -62,6 +61,9 @@ else:
   sys.exit("Unexpected group")
 
 for a_hash in hashes:
-  print(a_hash, group_for_token(a_hash))
+  try:
+    print(a_hash, group_for_token(a_hash))
+  except KeyError:
+    continue
 
 
